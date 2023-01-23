@@ -12,3 +12,6 @@
 
 # QBCore Shared Items.Lua
 ``` ["practicelaptop"] 		  = {["name"] = "practicelaptop",   	["label"] = "Practice Laptop",	 		["weight"] = 2500, 		["type"] = "item", 		["image"] = "practicelaptop.png", 		["unique"] = true, 	["useable"] = true, 	["shouldClose"] = true,   	["combinable"] = nil,   ["description"] = "Nice Gold Laptop?"}, ```
+
+# Drag And Drop
+``` Hacking And Laptop should be drag and drop after you put in the shared item! Enjoy and Happy Hacking! ```
