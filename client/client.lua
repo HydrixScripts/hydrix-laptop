@@ -1,11 +1,8 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-
 local PlayerData = QBCore.Functions.GetPlayerData()
-
 local IsHacking = false
 
---functions
-
+-- // Functions // -- 
 function openHack(puzzleDuration, puzzleLength, puzzleAmount)
     SetNuiFocus(true, true)
     SendNUIMessage({
@@ -40,13 +37,19 @@ function HackResults(success)
 	end
 end
 
--- events
+-- // RegisterNetEvents // --
+RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
+    PlayerData = QBCore.Functions.GetPlayerData()
+end)
+
+RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
+    PlayerData = {}
+end)
 
 RegisterNetEvent('hydrix-laptop:client:practiceLaptop', function()
     TriggerEvent('animations:client:EmoteCommandStart', {"texting"})  
-    TriggerServerEvent('hydrix-laptop:server:removelaptop')
     Wait(3000)
-    exports['hacking']:OpenHackingGame(Config.hackTime, Config.hackBlocks, Config.hackRepeat, 
+    exports['hacking']:OpenHackingGame(Config.HackTime, Config.HackBlocks, Config.HackRepeat, 
     function(Success)
         if Success then
             QBCore.Functions.Notify("You Are Juiced!", "success")
@@ -60,38 +63,14 @@ RegisterNetEvent('hydrix-laptop:client:practiceLaptop', function()
     end)
 end)
 
-RegisterCommand('practicelaptop', function()
-    local hasItem = QBCore.Functions.HasItem("practicelaptop")
-    if hasItem then
-        -- Start hacking
-        TriggerEvent('hydrix-laptop:client:practiceLaptop') -- Start the minigame (Make it into a item)
-    else
-        QBCore.Functions.Notify('You Dont Have A Laptop! Go Get Another!', 'error', 3500)
-    end
-end)
-
-
-RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
-    PlayerData = QBCore.Functions.GetPlayerData()
-end)
-
-RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
-    PlayerData = {}
-end)
-
---cb
-
+-- // EventHandlers // --
 AddEventHandler('open:minigame', function(callback)
     Callbackk = callback
     openHack()
 end)
-
 
 RegisterNUICallback('callback', function(data, cb)
     closeHack()
     Callbackk(data.success)
     cb('ok')
 end)
-
----end all client events---
-
