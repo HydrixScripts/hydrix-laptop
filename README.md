@@ -17,17 +17,17 @@
 ``` Hacking And Laptop should be drag and drop after you put in the shared item! Enjoy and Happy Hacking! ```
  
  # Preview
- Fail:
+``` Fail: ```
  https://streamable.com/te5hlc
- Pass:
+``` Pass: ```
  https://streamable.com/z2fjh1 
  
  # Snippet Example for Implementation in QB-Bank Robbery
-                           ```exports['hacking']:OpenHackingGame(Config.FleecaTime, Config.FleecaBlocks, Config.FleecaRepeat, 
-                           function(Success)
-                               if Success then
-                                   TriggerServerEvent('qb-bankrobbery:server:setBankState', closestBank, true)
-                               else
-                                   QBCore.Functions.Notify("You Failed To Hack The Bank!", "error")
-                               end
-                           end)```
+     ``` exports['hacking']:OpenHackingGame(Config.FleecaTime, Config.FleecaBlocks, Config.FleecaRepeat, 
+         function(Success)
+              if Success then
+                  TriggerServerEvent('qb-bankrobbery:server:setBankState', closestBank, true)
+              else
+                  QBCore.Functions.Notify("You Failed To Hack The Bank!", "error")
+          end
+   end) ```
