@@ -30,4 +30,4 @@
               else
                   QBCore.Functions.Notify("You Failed To Hack The Bank!", "error")
           end
-   end) ```
+   end) 
