@@ -23,7 +23,7 @@
  https://streamable.com/z2fjh1 
  
  # Snippet Example for Implementation in QB-Bank Robbery
-  ``` exports['hacking']:OpenHackingGame(Config.FleecaTime, Config.FleecaBlocks, Config.FleecaRepeat, 
+     exports['hacking']:OpenHackingGame(Config.FleecaTime, Config.FleecaBlocks, Config.FleecaRepeat, 
          function(Success)
               if Success then
                   TriggerServerEvent('qb-bankrobbery:server:setBankState', closestBank, true)
