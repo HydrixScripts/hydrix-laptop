@@ -20,4 +20,14 @@
  Fail:
  https://streamable.com/te5hlc
  Pass:
- https://streamable.com/z2fjh1
+ https://streamable.com/z2fjh1 
+ 
+ # Snippet Example for Implementation in QB-Bank Robbery
+                           ```exports['hacking']:OpenHackingGame(Config.FleecaTime, Config.FleecaBlocks, Config.FleecaRepeat, 
+                           function(Success)
+                               if Success then
+                                   TriggerServerEvent('qb-bankrobbery:server:setBankState', closestBank, true)
+                               else
+                                   QBCore.Functions.Notify("You Failed To Hack The Bank!", "error")
+                               end
+                           end)```
