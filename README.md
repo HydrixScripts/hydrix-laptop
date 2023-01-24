@@ -11,7 +11,20 @@
  ``` Make item usable to do the what the commands initialises. ```
 
 # QBCore Shared Items.Lua
-``` ["practicelaptop"] 		  = {["name"] = "practicelaptop",   	["label"] = "Practice Laptop",	 		["weight"] = 2500, 		["type"] = "item", 		["image"] = "practicelaptop.png", 		["unique"] = true, 	["useable"] = true, 	["shouldClose"] = true,   	["combinable"] = nil,   ["description"] = "Nice Gold Laptop?"}, ```
+```
+    ["practicelaptop"] = {
+        ["name"] = "practicelaptop",
+        ["label"] = "Practice Laptop",
+        ["weight"] = 2500,
+        ["type"] = "item",
+        ["image"] = "practicelaptop.png",
+        ["unique"] = true,
+        ["useable"] = true,
+        ["shouldClose"] = true,
+        ["combinable"] = nil,
+        ["description"] = "Nice Gold Laptop?"
+    },
+```
 
 # Drag And Drop
 ``` Hacking And Laptop should be drag and drop after you put in the shared item! Enjoy and Happy Hacking! ```
@@ -19,11 +32,11 @@
  # Preview
 ``` Fail: ```
  https://streamable.com/te5hlc
-``` Pass: ```
+``` Success: ```
  https://streamable.com/z2fjh1 
  
  # Snippet Example for Implementation in QB-Bank Robbery
-     exports['hacking']:OpenHackingGame(Config.FleecaTime, Config.FleecaBlocks, Config.FleecaRepeat, 
+    exports['hacking']:OpenHackingGame(Config.FleecaTime, Config.FleecaBlocks, Config.FleecaRepeat, 
          function(Success)
               if Success then
                   TriggerServerEvent('qb-bankrobbery:server:setBankState', closestBank, true)
