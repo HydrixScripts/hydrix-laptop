@@ -1,18 +1,10 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
 --// Server Events // --
-QBCore.Functions.CreateUseableItem('practicelaptop' , function(item)
+QBCore.Functions.CreateUseableItem('practicelaptop' , function(source, item)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    local laptop = math.random(Config.Laptopchance)
-
-    if not Player.Functions.GetItemByName('practicelaptop') then return end
-
-    if laptop == 1 then
-        TriggerClientEvent('QBCore:Notify', src, 'Your laptop just broke', 'error')
-        Player.Functions.RemoveItem('practicelaptop', 1)
-        TriggerClientEvent('hydrix-laptop:client:practiceLaptop', src)
-    end
+    TriggerClientEvent('hydrix-laptop:client:practiceLaptop', src)
 end)
 
 -- // Callbacks // --

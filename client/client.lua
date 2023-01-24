@@ -47,20 +47,27 @@ RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
 end)
 
 RegisterNetEvent('hydrix-laptop:client:practiceLaptop', function()
-    TriggerEvent('animations:client:EmoteCommandStart', {"texting"})  
-    Wait(3000)
-    exports['hacking']:OpenHackingGame(Config.HackTime, Config.HackBlocks, Config.HackRepeat, 
-    function(Success)
-        if Success then
-            QBCore.Functions.Notify("You Are Juiced!", "success")
-            TriggerEvent('animations:client:EmoteCommandStart', {"c"})
-            closeHack() -- close the minigame after success
-        else
-            QBCore.Functions.Notify("You Failed To do the Hack...", "error")
-            TriggerEvent('animations:client:EmoteCommandStart', {"c"})
-            closeHack() -- close the minigame after success 
-        end
-    end)
+    local src = source
+    local item = QBCore.Functions.HasItem("practicelaptop")
+
+    if item ~= nil then
+        TriggerEvent('animations:client:EmoteCommandStart', {"texting"})
+        Wait(3000)
+        exports['hacking']:OpenHackingGame(Config.HackTime, Config.HackBlocks, Config.HackRepeat, 
+        function(Success)
+            if Success then
+                QBCore.Functions.Notify("You Are Juiced!", "success")
+                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+                closeHack() -- close the minigame after success
+            else
+                QBCore.Functions.Notify("You Failed To do the Hack...", "error")
+                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+                closeHack() -- close the minigame after success 
+            end
+        end)
+    else
+        QBCore.Functions.Notify("You don't have a laptop.", "error")
+    end
 end)
 
 -- // EventHandlers // --
