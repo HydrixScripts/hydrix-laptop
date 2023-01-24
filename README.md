@@ -15,3 +15,9 @@
 
 # Drag And Drop
 ``` Hacking And Laptop should be drag and drop after you put in the shared item! Enjoy and Happy Hacking! ```
+ 
+ # Preview
+ Fail:
+ https://streamable.com/te5hlc
+ Pass:
+ https://streamable.com/z2fjh1
