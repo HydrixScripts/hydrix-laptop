@@ -1,12 +1,20 @@
 Config = {}
 
+-- Amount of time it takes to complete the hack (in seconds)
+Config.HackTime = 30
 
--- // Minigame Settings // --
-Config.HackTime = 10 -- 10 seconds countdown
-Config.HackBlocks = 4 -- Hacking 4 blocks
-Config.HackRepeat = 4 -- Reapeat 4 times
-Config.Laptopchance = 50  -- 1 in 100 chance of getting removed of playrs inventory
+-- Whether or not to allow custom hack times
+Config.AllowCustomHackTime = true
 
+-- Minimum and maximum times for custom hacks (in seconds)
+Config.CustomHackTimeMin = 10
+Config.CustomHackTimeMax = 60
 
--- // Debug // --
-Config.Debug = false -- Debug mode
+-- Number of blocks in the hacking minigame
+Config.HackBlocks = 5
+
+-- Number of times to repeat the hacking minigame
+Config.HackRepeat = 1
+
+-- Chance (out of 100) that a failed hack will result in the laptop being confiscated
+Config.FailureRemovalChance = 25
