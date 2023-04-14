@@ -1,8 +1,8 @@
-local QBCore = exports['qb-core']:GetCoreObject()
-local PlayerData = QBCore.Functions.GetPlayerData()
 local IsHacking = false
+local HackStartTime = 0
+local CustomHackTime = 30
 
--- // Functions // -- 
+-- // Functions // --
 function openHack(puzzleDuration, puzzleLength, puzzleAmount)
     SetNuiFocus(true, true)
     SendNUIMessage({
@@ -12,72 +12,76 @@ function openHack(puzzleDuration, puzzleLength, puzzleAmount)
         amount = puzzleAmount
     })
     IsHacking = true
+    HackStartTime = GetGameTimer()
 end
 
 function closeHack()
     SetNuiFocus(false, false)
     IsHacking = false
+    HackStartTime = 0
 end
 
 function GetHackingStatus()
     return IsHacking
 end
 
+function GetHackingProgress()
+    if not IsHacking then return 0 end
+    local elapsed = GetGameTimer() - HackStartTime
+    local progress = elapsed / (Config.AllowCustomHackTime and CustomHackTime or Config.HackTime)
+    return math.min(progress, 1)
+end
 
-function HackResults(success)
-    if success then
-		closeHack()
-        QBCore.Functions.Notify("You completed the hack.", "success")
-        TriggerEvent('animations:client:EmoteCommandStart', {"c"})
-        exports["mz-skills"]:UpdateSkill("Hacking", 5)
-    else
-		closeHack()
-		QBCore.Functions.Notify("You failed the hack.", "error")
-        TriggerEvent('animations:client:EmoteCommandStart', {"c"})
-	end
+function GetCustomHackTime()
+    local menu = exports['qb-menu']:CreateMenu('Custom Hack Time', 'Enter the time in seconds:', 'top-right', 200, 25, 100, 'size-125', 'none', 'menuv', 'test')
+    local input = exports['qb-input']:CreateInput({menu = menu, id = 'time', label = 'Time (sec)', value = CustomHackTime, type = 'number', min = Config.CustomHackTimeMin, max = Config.CustomHackTimeMax})
+    menu.onClosed = function()
+        if input.value then
+            CustomHackTime = tonumber(input.value)
+            QBCore.Functions.Notify("Custom hack time set to " .. CustomHackTime .. " seconds.", "success")
+        else
+            QBCore.Functions.Notify("Invalid custom hack time. It must be between " .. Config.CustomHackTimeMin .. " and " .. Config.CustomHackTimeMax .. " seconds.", "error")
+        end
+    end
+    menu:Open()
 end
 
 -- // RegisterNetEvents // --
-RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
-    PlayerData = QBCore.Functions.GetPlayerData()
-end)
-
-RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
-    PlayerData = {}
-end)
-
-RegisterNetEvent('hydrix-laptop:client:practiceLaptop', function()
+RegisterNetEvent('hydrix-laptop:client:practiceLaptop')
+AddEventHandler('hydrix-laptop:client:practiceLaptop', function()
     local src = source
-    local item = QBCore.Functions.HasItem("practicelaptop")
+    local item = QBCore.Functions.GetItemByName("practicelaptop")
 
     if item ~= nil then
         TriggerEvent('animations:client:EmoteCommandStart', {"texting"})
         Wait(3000)
-        exports['hacking']:OpenHackingGame(Config.HackTime, Config.HackBlocks, Config.HackRepeat, 
-        function(Success)
-            if Success then
-                QBCore.Functions.Notify("You Are Juiced!", "success")
+        local hackTime = Config.AllowCustomHackTime and CustomHackTime or Config.HackTime
+        exports['hacking']:OpenHackingGame(hackTime, Config.HackBlocks, Config.HackRepeat, function(success)
+            if success then
+                QBCore.Functions.Notify("You completed the hack.", "success")
                 TriggerEvent('animations:client:EmoteCommandStart', {"c"})
                 closeHack() -- close the minigame after success
             else
-                QBCore.Functions.Notify("You Failed To do the Hack...", "error")
+                QBCore.Functions.Notify("You failed the hack.", "error")
                 TriggerEvent('animations:client:EmoteCommandStart', {"c"})
-                closeHack() -- close the minigame after success 
+                if math.random(100) <= Config.FailureRemovalChance then
+                    TriggerServerEvent('hydrix-laptop:server:confiscateLaptop')
+                end
+                closeHack() -- close the minigame after failure
             end
         end)
     else
-        QBCore.Functions.Notify("You don't have a laptop.", "error")
+        QBCore.Functions.Notify("You don't have a practice laptop.", "error")
     end
 end)
 
--- // EventHandlers // --
-AddEventHandler('open:minigame', function(callback)
-    Callbackk = callback
-    openHack()
+
+-- // Net Events // --
+RegisterNetEvent('hydrix-laptop:client:setCustomHackTime')
+AddEventHandler('hydrix-laptop:client:setCustomHackTime', function()
+    QBCore.Functions.TriggerCallback('hydrix-laptop:server:getCustomHackTime', function(time)
+        CustomHackTime = time
+        QBCore.Functions.Notify("Custom hack time set to " .. CustomHackTime .. " seconds.", "success")
+    end)
 end)
 
-RegisterNUICallback('callback', function(data, cb)
-    closeHack()
-    Callbackk(data.success)
-    cb('ok')
-end)
