@@ -34,3 +34,32 @@ AddEventHandler('onResourceStart', function(resource)
     print("^5Hydrix Laptop Started ^7")
    end
 end)
+
+-- // Callbacks // --
+
+RegisterServerEvent('hydrix-laptop:server:getCustomHackTime')
+AddEventHandler('hydrix-laptop:server:getCustomHackTime', function()
+    local src = source
+    TriggerClientEvent('qb-menu:client:openMenu', src, {
+        {
+            header = "Custom Hack Time",
+            txt = "Set the custom hack time in seconds",
+            params = {
+                event = "hydrix-laptop:client:setCustomHackTime"
+            }
+        }
+    })
+end)
+
+
+RegisterServerEvent('hydrix-laptop:server:confiscateLaptop')
+AddEventHandler('hydrix-laptop:server:confiscateLaptop', function()
+    local src = source
+    local xPlayer = QBCore.Functions.GetPlayer(src)
+    local item = xPlayer.getInventoryItem("practicelaptop")
+
+    if item ~= nil and item.count > 0 then
+        xPlayer.removeInventoryItem("practicelaptop", 1)
+        TriggerClientEvent('QBCore:Notify', src, "Your laptop was confiscated due to a failed hack attempt.", "error")
+    end
+end)
