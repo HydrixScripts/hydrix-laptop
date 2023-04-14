@@ -8,7 +8,7 @@
  ```If laptop in inventory and uses /practicelaptop can practice the hack according to the settings in the config!```
  
   # Version 2 Includes
- ```Complete Rework Of Code And fixed Create Usable Item function to no longer utilize a command to use practice laptop. Also added qb-menu and qb-input support for player in city to set their own custom hack times to fit thier progression and experience difficulty. also cleaned all the code and optimized callbacks and removed unused functions and replaced with operable and proper call and net events.```
+ ```Complete Rework Of Code And fixed Create Usable Item function to no longer utilize a command to use practice laptop. Also added qb-menu and qb-input support for player in city to set their own custom hack times to fit thier progression and experience difficulty. also cleaned all the code,  optimized callbacks , removed unused functions, replaced with operable and proper calls / net events.```
  
  # WIP
  ``` Make item usable to do the what the commands initialises. ```
